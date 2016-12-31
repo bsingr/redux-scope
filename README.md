@@ -12,6 +12,10 @@
 - provides scoped version of redux store that can be passed to `connect()` of `react-redux`
 - provides scoped versions of your reducer functions
 
+## Sequence
+
+![SEQUENCE](./SEQUENCE.png)
+
 ## Usage
 
 `import {scopeGetState, scopeDispatch, scopeReducer, scopeStore} from 'redux-react'`
