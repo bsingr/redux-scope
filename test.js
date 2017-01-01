@@ -104,6 +104,24 @@ describe('redux-scope', () => {
       expect(scopedGetState()).to.eql({'own-child-scope': 'own-value'});
       expect(childScopedGetState()).to.eql('own-value');
     });
+
+    it('returns subset of state by array index', () => {
+      const getState = () => ({
+        'own-scope': {
+          'list': [
+            {
+              'item-one': 1
+            },
+            {
+              'item-two': 2
+            }
+          ]
+        }
+      });
+      expect(scopeGetState(getState)('own-scope/list/0/item-one')()).to.equal(1);
+      expect(scopeGetState(getState)('own-scope/list/1/item-two')()).to.equal(2);
+      expect(scopeGetState(getState)('own-scope/list/2/item-three')()).to.equal(undefined);
+    });
   });
 
   describe('scopeReducer()', () => {

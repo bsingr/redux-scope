@@ -28,10 +28,16 @@ const scopeDispatch = dispatch => scope => action => dispatch(scopeAction(action
 
 // returns a new getState() function
 // that extracts the a subset of the root state using given scope
-const scopeGetState = getState => scope => () => scope.split(SCOPE_DELIMITER).reduce(
-  (state, scope) => state ? state[scope] : undefined,
-  getState()
-);
+const scopeGetState = getState => scope => () => {
+  const scopedGetState = (state, aScope) => {
+    if (state) {
+      const number = parseInt(aScope, 10);
+      return isNaN(number) ? state[aScope] : state[number];
+    }
+    return state;
+  }
+  return scope.split(SCOPE_DELIMITER).reduce(scopedGetState, getState());
+};
 
 // scopes the dispatch and getState functions of the store
 const scopeStore = store => {
