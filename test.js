@@ -70,6 +70,16 @@ describe('redux-scope', () => {
       expect(result()).to.eql('own-action-result');
     });
 
+    it('appends scope to functional actions w/out type, calls dispatch and returns result', () => {
+      const action = () => 'own-action-result';
+      const dispatch = spy(a => a);
+      const scopedDispatch = scopeDispatch(dispatch)('own-scope/own-child-scope');
+      const result = scopedDispatch(action);
+      expect(dispatch).to.be.calledWithMatch(action);
+      expect(result.type).to.eql('own-scope/own-child-scope/');
+      expect(result()).to.eql('own-action-result');
+    });
+
     describe('nested scopeDispatch()', () => {
       it('appends scope to actions with scope, calls dispatch and returns result', () => {
         const action = {type: 'an-action'};

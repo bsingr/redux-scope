@@ -2,7 +2,7 @@ const SCOPE_DELIMITER = '/';
 const SCOPE_WILDCARD = '*';
 
 // prefix action type with given scope
-const scopeType = (type, scope) => typeof type === 'string' ? scope + SCOPE_DELIMITER + type : scope;
+const scopeType = (type, scope) => typeof type === 'string' ? scope + SCOPE_DELIMITER + type : scope + SCOPE_DELIMITER;
 
 // remove given scope from action type
 const descopeType = (type, scope) => typeof type === 'string' && type.startsWith(scope) ? type.substring(scope.length + SCOPE_DELIMITER.length) : type;
